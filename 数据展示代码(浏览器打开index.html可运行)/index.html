@@ -1,0 +1,506 @@
+﻿<!doctype html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>index</title>
+  <script type="text/javascript" src="js/jquery.js"></script>
+  <link rel="stylesheet" href="css/comon0.css">
+</head>
+<script>
+  $(window).load(function () {
+    $(".loading").fadeOut()
+  })
+
+  /****/
+  $(document).ready(function () {
+    var whei = $(window).width()
+    $("html").css({ fontSize: whei / 20 })
+    $(window).resize(function () {
+      var whei = $(window).width()
+      $("html").css({ fontSize: whei / 20 })
+    });
+  });
+</script>
+<script type="text/javascript" src="js/echarts.min.js"></script>
+<script language="JavaScript" src="js/js.js"></script>
+
+<body>
+  <div class="canvas" style="opacity: .2">
+    <iframe frameborder="0" src="js/index.html" style="width: 100%; height: 100%"></iframe>
+  </div>
+  <div class="loading">
+    <div class="loadbox"> <img src="picture/loading.gif"> 页面加载中... </div>
+  </div>
+  <div class="head">
+    <h1>针对电商平台售卖的游戏本轻薄本参数对比</h1>
+    <div class="weather"><!--<img src="picture/weather.png"><span>多云转小雨</span>--><span id="showTime"></span></div>
+
+    <script>
+      var t = null;
+      t = setTimeout(time, 1000);//開始运行
+      function time() {
+        clearTimeout(t);//清除定时器
+        dt = new Date();
+        var y = dt.getFullYear();
+        var mt = dt.getMonth() + 1;
+        var day = dt.getDate();
+        var h = dt.getHours();//获取时
+        var m = dt.getMinutes();//获取分
+        var s = dt.getSeconds();//获取秒
+        document.getElementById("showTime").innerHTML = y + "年" + mt + "月" + day + "-" + h + "时" + m + "分" + s + "秒";
+        t = setTimeout(time, 1000); //设定定时器，循环运行     
+      }
+
+    </script>
+
+
+  </div>
+  <div class="mainbox">
+    <ul class="clearfix">
+      <li>
+        <div class="boxall" style="height: 3.2rem">
+          <div class="alltitle">游戏本显卡类型和数量分布</div>
+          <div class="allnav" id="echart1"></div>
+          <div class="boxfoot"></div>
+        </div>
+        <div class="boxall" style="height: 3.2rem">
+          <div class="alltitle">游戏本净重及数量分布</div>
+          <div class="allnav" id="echart2"></div>
+          <div class="boxfoot"></div>
+        </div>
+        <div class="boxall" style="height: 3.2rem">
+          <div style="height:100%; width: 100%;">
+            <div class="sy" id="fb1"></div>
+            <div class="sy" id="fb2"></div>
+            <div class="sy" id="fb3"></div>
+          </div>
+          <div class="boxfoot">
+
+          </div>
+        </div>
+      </li>
+      <li>
+        <div class="bar">
+          <div class="barbox">
+            <ul class="clearfix">
+              <li class="pulll_left counter">5889</li>
+              <li class="pulll_left counter">6001</li>
+            </ul>
+          </div>
+          <div class="barbox2">
+            <ul class="clearfix">
+              <li class="pulll_left">游戏本数据量</li>
+              <li class="pulll_left">轻薄本数据量</li>
+            </ul>
+          </div>
+        </div>
+        <div class="map">
+          <div class="map1"><img src="picture/lbx.png"></div>
+          <div class="map2"><img src="picture/jt.png"></div>
+          <div class="map3"><img src="picture/map.png"></div>
+
+        </div>
+      </li>
+      <li>
+        <div class="boxall" style="height:3.4rem">
+          <div class="alltitle">轻薄本显卡类型和数量分布</div>
+          <div class="allnav" id="echart4"></div>
+          <div class="boxfoot"></div>
+        </div>
+        <div class="boxall" style="height: 3.2rem">
+          <div class="alltitle">轻薄本净重及数量分布</div>
+          <div class="allnav" id="echart5"></div>
+          <div class="boxfoot"></div>
+        </div>
+        <div class="boxall" style="height: 3.2rem">
+          <div style="height:100%; width: 100%;">
+            <div class="sy" id="fc1"></div>
+            <div class="sy" id="fc2"></div>
+            <div class="sy" id="fc3"></div>
+          </div>
+      </li>
+    </ul>
+  </div>
+  <div class="back"></div>
+
+
+  <script type="text/javascript" src="js/china.js"></script>
+  <script type="text/javascript" src="js/area_echarts.js"></script>
+  <div id="container" style="height: 150vh"></div>
+  <div id="container2" style="height: 150vh"></div>
+  <script type="text/javascript">
+    var dom = document.getElementById('container');
+    var myChart = echarts.init(dom, null, {
+      renderer: 'canvas',
+      useDirtyRect: false
+    });
+    var app = {};
+
+    var option;
+
+
+    option = {
+      title: {
+        text: '游戏本CPU类型及占比',
+        textStyle:{
+          color:'white'
+        },
+        left: 'center'
+      },
+      tooltip: {
+        trigger: 'item',
+        formatter: '{a} <br/>{b} : {c} ({d}%)'
+      },
+      legend: {
+        type: 'scroll',
+        orient: 'vertical',
+        right: 10,
+        textStyle:{
+          color:'white'
+        },
+        top: 20,
+        bottom: 20,
+        data: [
+          "第十三代i9处理器",
+          "第12代酷睿i7处理器",
+          "amd r7",
+          "第12代酷睿i5处理器",
+          "第十三代i5处理器",
+          "amd r9",
+          "第十三代i7处理器",
+          "amd r5",
+          "十一代酷睿处理器",
+          "第12代酷睿i9处理器",
+          "第十一代智能英特尔酷睿i5 处理器",
+          "第十一代酷睿i3处理器",
+          "第12代智能英特尔酷睿i7处理器",
+          "英特尔",
+          "第13代智能英特尔酷睿i5处理器",
+          "第十一代智能英特尔酷睿i7处理器",
+          "第12代智能英特尔酷睿i9处理器",
+          "十二代i5",
+          "第12代智能英特尔酷睿i5处理器",
+          "赛扬四核",
+          "标压酷睿",
+          "第十一代i5处理器",
+          "第十一代i7处理器",
+          "第13代智能英特尔酷睿i7处理器",
+          "英特尔 锐龙",
+          "intel i5",
+          "intel酷睿",
+          "amd",
+          "第十代智能英特尔酷睿i7处理器",
+          "英特尔酷睿",
+          "i7-7700",
+          "英特尔 酷睿i7",
+          "英特尔 酷睿i7 9代/10代",
+          "第十代智能英特尔酷睿i5处理器",
+          "r7-5800h",
+          "英特尔 酷睿i7 9代系列/10代系列",
+          "第11代酷睿i9处理器",
+          "amd 锐龙 7 pro",
+          "inter 酷睿i5",
+          "apple m1 pro",
+          "intel/amd",
+          "英特尔 酷睿i7/amd 锐龙",
+          "十二代i7",
+          "英特尔酷睿i5/i7",
+          "酷睿",
+          "赛扬双核",
+          "锐龙",
+          "其他",
+          "英特尔酷睿i5 处理器",
+          "第六代智能英特尔酷睿i7处理器",
+          "intel",
+          "第十代智能英特尔酷睿i9处理器",
+          "第八代智能英特尔酷睿i7处理器",
+          "i7",
+          "amd r3",
+          "酷睿i5",
+          "第九代智能英特尔酷睿i7处理器",
+          "第九代智能英特尔酷睿i9处理器",
+          "笔记本芯片",
+          "酷睿intel",
+          "英特尔amd",
+          "gtx960",
+          "以套餐选择为准",
+          "intel i7标准电压版",
+          "第十代酷睿i3处理器",
+          "第七代智能英特尔酷睿i7处理器",
+          "第十代智能英特尔酷睿i3处理器",
+          "intei\\amd",
+          "i7-9750h",
+          "lntel",
+          "英特尔酷睿/锐龙",
+          "四核高性能处理器",
+          "英特尔 酷睿i7 8代系列",
+          "i5 i7 r5 r7",
+          "amd 双核处理器",
+          "intel i9",
+          "intel  amd 锐龙",
+          "因特尔",
+          "英特尔 酷睿i7 10代系列",
+          "amd r7标压",
+          " i5 i7 i3 赛扬 amd",
+          "因特尔i7-8550u"
+        ]
+      },
+      series: [
+        {
+          name: '处理器类型',
+          type: 'pie',
+          radius: '55%',
+          center: ['40%', '50%'],
+          data: [{ value: 346, name: '第十三代i9处理器' },
+          { value: 418, name: '第12代酷睿i7处理器' },
+          { value: 384, name: 'amd r7' },
+          { value: 177, name: '第12代酷睿i5处理器' },
+          { value: 156, name: '第十三代i5处理器' },
+          { value: 26, name: 'amd r9' },
+          { value: 132, name: '第十三代i7处理器' },
+          { value: 205, name: 'amd r5' },
+          { value: 2, name: '十一代酷睿处理器' },
+          { value: 114, name: '第12代酷睿i9处理器' },
+          { value: 174, name: '第十一代智能英特尔酷睿i5 处理器' },
+          { value: 22, name: '第十一代酷睿i3处理器' },
+          { value: 101, name: '第12代智能英特尔酷睿i7处理器' },
+          { value: 155, name: '英特尔' },
+          { value: 92, name: '第13代智能英特尔酷睿i5处理器' },
+          { value: 80, name: '第十一代智能英特尔酷睿i7处理器' },
+          { value: 34, name: '第12代智能英特尔酷睿i9处理器' },
+          { value: 17, name: '十二代i5' },
+          { value: 167, name: '第12代智能英特尔酷睿i5处理器' },
+          { value: 120, name: '赛扬四核' },
+          { value: 26, name: '标压酷睿' },
+          { value: 40, name: '第十一代i5处理器' },
+          { value: 29, name: '第十一代i7处理器' },
+          { value: 37, name: '第13代智能英特尔酷睿i7处理器' },
+          { value: 28, name: '英特尔 锐龙' },
+          { value: 1, name: 'intel i5' },
+          { value: 50, name: 'intel酷睿' },
+          { value: 39, name: 'amd' },
+          { value: 16, name: '第十代智能英特尔酷睿i7处理器' },
+          { value: 23, name: '英特尔酷睿' },
+          { value: 13, name: 'i7-7700' },
+          { value: 11, name: '英特尔 酷睿i7' },
+          { value: 12, name: '英特尔 酷睿i7 9代/10代' },
+          { value: 24, name: '第十代智能英特尔酷睿i5处理器' },
+          { value: 1, name: 'r7-5800h' },
+          { value: 2, name: '英特尔 酷睿i7 9代系列/10代系列' },
+          { value: 6, name: '第11代酷睿i9处理器' },
+          { value: 2, name: 'amd 锐龙 7 pro' },
+          { value: 7, name: 'inter 酷睿i5' },
+          { value: 3, name: 'apple m1 pro' },
+          { value: 7, name: 'intel/amd' },
+          { value: 5, name: '英特尔 酷睿i7/amd 锐龙' },
+          { value: 12, name: '十二代i7' },
+          { value: 3, name: '英特尔酷睿i5/i7' },
+          { value: 11, name: '酷睿' },
+          { value: 8, name: '赛扬双核' },
+          { value: 1, name: '锐龙' },
+          { value: 2, name: '其他' },
+          { value: 16, name: '英特尔酷睿i5 处理器' },
+          { value: 2, name: '第六代智能英特尔酷睿i7处理器' },
+          { value: 45, name: 'intel' },
+          { value: 8, name: '第十代智能英特尔酷睿i9处理器' },
+          { value: 5, name: '第八代智能英特尔酷睿i7处理器' },
+          { value: 11, name: 'i7' },
+          { value: 6, name: 'amd r3' },
+          { value: 8, name: '酷睿i5' },
+          { value: 3, name: '第九代智能英特尔酷睿i7处理器' },
+          { value: 1, name: '第九代智能英特尔酷睿i9处理器' },
+          { value: 2, name: '笔记本芯片' },
+          { value: 6, name: '酷睿intel' },
+          { value: 3, name: '英特尔amd' },
+          { value: 3, name: 'gtx960' },
+          { value: 2, name: '以套餐选择为准' },
+          { value: 2, name: 'intel i7标准电压版' },
+          { value: 2, name: '第十代酷睿i3处理器' },
+          { value: 1, name: '第七代智能英特尔酷睿i7处理器' },
+          { value: 3, name: '第十代智能英特尔酷睿i3处理器' },
+          { value: 2, name: 'intei\amd' },
+          { value: 5, name: 'i7-9750h' },
+          { value: 1, name: 'lntel' },
+          { value: 1, name: '英特尔酷睿/锐龙' },
+          { value: 1, name: '四核高性能处理器' },
+          { value: 3, name: '英特尔 酷睿i7 8代系列' },
+          { value: 1, name: 'i5 i7 r5 r7' },
+          { value: 1, name: 'amd 双核处理器' },
+          { value: 1, name: 'intel i9' },
+          { value: 1, name: 'intel  amd 锐龙' },
+          { value: 1, name: '因特尔' },
+          { value: 1, name: '英特尔 酷睿i7 10代系列' },
+          { value: 1, name: 'amd r7标压' },
+          { value: 1, name: ' i5 i7 i3 赛扬 amd' },
+          { value: 1, name: '因特尔i7-8550u' }
+          ],
+          emphasis: {
+            itemStyle: {
+              shadowBlur: 10,
+              shadowOffsetX: 0,
+              shadowColor: 'rgba(0, 0, 0, 0.5)'
+            }
+          }
+        }
+      ]
+    };
+
+    if (option && typeof option === 'object') {
+      myChart.setOption(option);
+    }
+
+    window.addEventListener('resize', myChart.resize);
+  </script>
+
+  <script type="text/javascript">
+    var dom = document.getElementById('container2');
+    var myChart = echarts.init(dom, null, {
+      renderer: 'canvas',
+      useDirtyRect: false
+    });
+    var app = {};
+
+    var option;
+
+
+    option = {
+      title: {
+        text: '轻薄本CPU类型及占比',
+        textStyle:{
+          color:'white'
+        },
+        left: 'center'
+      },
+      tooltip: {
+        trigger: 'item',
+        formatter: '{a} <br/>{b} : {c} ({d}%)'
+      },
+      legend: {
+        type: 'scroll',
+        orient: 'vertical',
+        right: 10,
+        textStyle:{
+          color:'white'
+        },
+        top: 20,
+        bottom: 20,
+        data: [
+          "第十一代智能英特尔酷睿i5 处理器",
+          "第12代智能英特尔酷睿i5处理器",
+          "第13代智能英特尔酷睿i5处理器",
+          "amd r5",
+          "第12代智能英特尔酷睿i9处理器",
+          "amd r7",
+          "第十三代i9处理器",
+          "第12代智能英特尔酷睿i7处理器",
+          "十二代i5",
+          "第13代智能英特尔酷睿i7处理器",
+          "第十三代i7处理器",
+          "第12代酷睿i7处理器",
+          "赛扬四核",
+          "amd 双核处理器",
+          "第十三代i5处理器",
+          "英特尔",
+          "第十一代智能英特尔酷睿i7处理器",
+          "赛扬双核",
+          "apple m1 pro",
+          "第12代酷睿i5处理器",
+          "amd r9",
+          "第十一代酷睿i3处理器",
+          "第十代智能英特尔酷睿i5处理器",
+          "amd 锐龙 5 pro",
+          "第十代智能英特尔酷睿i7处理器",
+          "十二代i7",
+          "第12代酷睿i9处理器",
+          "amd 锐龙 7 pro",
+          "apple m2 pro",
+          "第十代智能英特尔酷睿i3处理器",
+          "第十一代i7处理器",
+          "第六代智能英特尔酷睿i7处理器",
+          "第十一代i5处理器",
+          "amd r3",
+          "第八代智能英特尔酷睿i7处理器",
+          "第七代智能英特尔酷睿i7处理器",
+          "第十代酷睿i3处理器",
+          "amd 四核处理器",
+          "奔腾双核",
+          "apple m1",
+          "第十代智能英特尔酷睿i9处理器",
+          "第五代智能英特尔酷i3处理器",
+          "第九代智能英特尔酷睿i7处理器",
+          "第七代智能英特尔酷睿i5处理器"
+        ]
+      },
+      series: [
+        {
+          name: '处理器类型',
+          type: 'pie',
+          radius: '55%',
+          center: ['40%', '50%'],
+          data: [{ value: 559, name: '第十一代智能英特尔酷睿i5 处理器' },
+          { value: 494, name: '第12代智能英特尔酷睿i5处理器' },
+          { value: 251, name: '第13代智能英特尔酷睿i5处理器' },
+          { value: 387, name: 'amd r5' },
+          { value: 45, name: '第12代智能英特尔酷睿i9处理器' },
+          { value: 394, name: 'amd r7' },
+          { value: 25, name: '第十三代i9处理器' },
+          { value: 365, name: '第12代智能英特尔酷睿i7处理器' },
+          { value: 53, name: '十二代i5' },
+          { value: 108, name: '第13代智能英特尔酷睿i7处理器' },
+          { value: 2, name: '第十三代i7处理器' },
+          { value: 55, name: '第12代酷睿i7处理器' },
+          { value: 191, name: '赛扬四核' },
+          { value: 13, name: 'amd 双核处理器' },
+          { value: 7, name: '第十三代i5处理器' },
+          { value: 2, name: '英特尔' },
+          { value: 171, name: '第十一代智能英特尔酷睿i7处理器' },
+          { value: 21, name: '赛扬双核' },
+          { value: 9, name: 'apple m1 pro' },
+          { value: 26, name: '第12代酷睿i5处理器' },
+          { value: 18, name: 'amd r9' },
+          { value: 76, name: '第十一代酷睿i3处理器' },
+          { value: 105, name: '第十代智能英特尔酷睿i5处理器' },
+          { value: 7, name: 'amd 锐龙 5 pro' },
+          { value: 10, name: '第十代智能英特尔酷睿i7处理器' },
+          { value: 33, name: '十二代i7' },
+          { value: 13, name: '第12代酷睿i9处理器' },
+          { value: 23, name: 'amd 锐龙 7 pro' },
+          { value: 11, name: 'apple m2 pro' },
+          { value: 15, name: '第十代智能英特尔酷睿i3处理器' },
+          { value: 4, name: '第十一代i7处理器' },
+          { value: 4, name: '第六代智能英特尔酷睿i7处理器' },
+          { value: 2, name: '第十一代i5处理器' },
+          { value: 14, name: 'amd r3' },
+          { value: 5, name: '第八代智能英特尔酷睿i7处理器' },
+          { value: 2, name: '第七代智能英特尔酷睿i7处理器' },
+          { value: 13, name: '第十代酷睿i3处理器' },
+          { value: 1, name: 'amd 四核处理器' },
+          { value: 1, name: '奔腾双核' },
+          { value: 8, name: 'apple m1' },
+          { value: 5, name: '第十代智能英特尔酷睿i9处理器' },
+          { value: 2, name: '第五代智能英特尔酷i3处理器' },
+          { value: 1, name: '第九代智能英特尔酷睿i7处理器' },
+          { value: 1, name: '第七代智能英特尔酷睿i5处理器' }
+
+          ],
+          emphasis: {
+            itemStyle: {
+              shadowBlur: 10,
+              shadowOffsetX: 0,
+              shadowColor: 'rgba(0, 0, 0, 0.5)'
+            }
+          }
+        }
+      ]
+    };
+
+    if (option && typeof option === 'object') {
+      myChart.setOption(option);
+    }
+
+    window.addEventListener('resize', myChart.resize);
+  </script>
+</body>
+
+</html>
